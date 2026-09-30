@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+Program name: thankyou.html
+Author: Alan Le
+Date created: 09/30/2026
+Date last edited: 09/30/2026
+Version: 1.0
+Description: Thank-you page for the Coral Medicine patient registration form.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Thank You - Coral Medicine</title>
+    <!-- External CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="header-container">
+        <div class="head-left">
+            <img src="images/coral_med_logo.png.webp"
+                 alt="Coral Medicine logo"
+                 class="logo-size">
+        </div>
+        <div class="head-middle">
+            <h1>Coral Medicine</h1>
+        </div>
+        <div class="head-right">
+            Today's date:
+            <span id="today">Date goes here</span>
+        </div>
+    </div>
+    <!-- Thank you message -->
+    <div class="thankyou-container">
+        <h2>Thank You for Your Submission!</h2>
+        <p>
+            Your patient registration form has been submitted successfully.
+        </p>
+        <p>
+            Thank you for choosing Coral Medicine.
+        </p>
+        <a href="patient-form.html">Return to Registration Form</a>
+    </div>
+    <!-- Footer section -->
+    <footer class="footer-container">
+        <p>&copy; 2026 Coral Medicine. All rights reserved.</p>
+        <a href="mailto:contact@coralmedicine.com">
+            Contact Us
+        </a>
+    </footer>
+    <!-- Dynamic date -->
+    <script>
+        document.getElementById("today").innerHTML =
+            new Date().toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+    </script>
+    <!-- End of page-->
+</body>
+</html>

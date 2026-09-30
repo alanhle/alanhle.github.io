@@ -1,1 +1,278 @@
+<!DOCTYPE html>
+<!--
+Name: Alan Le
+File: homework1.html
+Date Created: 9/27/2026
+Date Updated: 9/28/2026
+Purpose: MIS 7375 Homework 1
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JavaScript Form Validation using a sample registration form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--Header section, logo, company name, and dynamic date-->
+<div class="header-container">
+
+<div class="head-left">
+  <img src="images/coral_med_logo.png.webp" alt="Coral Medicine logo" class="logo-size">
+</div>
+<div class="head-middle">
+  <h1>Coral Medicine</h1>
+</div>
+<div class="head-right">
+  <tr>
+    <td valign="top" align="right">Today's date: <span id="today">Date goes here</span></td>
+  </tr>
+</div>
+
+</div>
+<!--patient registration form-->
+<form name="registration"  action="thank-you.html" return formValidation();">
+  <!--Patients name-->
+    <div class="name-container">
+          <label for="firstname"> First Name:</label>
+          <input type="text" placeholder="First Name" size="30" maxlength="30"
+           id="firstname" name="firstname"
+           pattern="[A-Z^a-z \-'^~]{2,}"
+           oninput="checkfirstname()" onblur="checkfirstname()"
+           required
+           title="Minimum 2 characters; only letters, spaces, &quot;-&quot; and ' allowed.">
+          <label for="middleinitial">MI:</label>
+          <input type="text" placeholder="MI" size="1" maxlength="1"
+           id="middleinitial" name="middleinitial">
+          <label for="lastname">Last Name:</label>
+          <input type="text" placeholder="Last name" size="20" maxlength="30"
+           id="lastname" name="lastname"
+           pattern="[A-Z^a-z \-'^~]{2,}"
+           oninput="checklastname()" onblur="checklastname()"
+           required
+           title="Minimum 2 characters; only letters, spaces, &quot;-&quot; and ' allowed.">
+        </div>
+        <!--account user login for userid and password-->
+        <div class="userid-row">
+          <label for="userid">User ID:</label>
+          <input type="text"
+            id="userid"
+            name="userid"
+            size="20"
+            minlength="5"
+            maxlength="30"
+            pattern="[A-Za-z]+[A-Za-z0-9-_]{8,}"
+            required
+            oninvalid="this.setCustomValidity('Invalid User ID. Enter letters, numbers, dash or underscores. 1st character must be a letter.')"
+            oninput="this.setCustomValidity('')"
+            title="Minimum 5 characters; no spaces or special characters.">
+        </div>
+        <div class="password-container">
+          <label for="userpassword">Password:</label>
+          <input type="password"
+                 id="userpassword"
+                 name="userpassword"
+                 size="20"
+                 maxlength="30"
+                 required>
+        </div>
+        <div class="confirm-password-container">
+          <label for="confirmpassword">Confirm Password:</label>
+          <input type="password"
+           id="confirmpassword"
+           name="confirmpassword"
+           size="20"
+           maxlength="30"
+           required>
+        </div>
+        <!--patients email and date of birth information-->
+        <div class="email-container">
+            <label for="email">Email:</label>
+            <input type="text" 
+              id="email"
+              name="email"
+              size="20"
+              maxlength="50"
+              required>
+        </div>
+        <div class="confirm-email-container">
+            <label for="confirmemail">Confirm Email:</label>
+            <input type="text" 
+              id="confirmemail"
+              name="confirmemail"
+              size="20"
+              maxlength="50"
+              required>
+        </div>
+        <div class="dob-container">
+            <label for="dob">Date of Birth:</label>
+            <input type="date"
+              id="dob"
+              name="dob"
+              required>
+        </div>
+        <!--patients address and other location information-->
+        <div class="address-container">
+          <div class="address-row">
+            <label for="address">Address:</label>
+            <input type="text"
+              id="address"
+              name="address"
+              maxlength="30">
+            <div class="address-container"></div>
+              <label for="address2">Address Line 2</label>
+              <input type="text" 
+                id="address2"
+                name="address2"
+                maxlength="30">
+        </div>
+        <!--state selector-->
+        <div class="state-container">
+          <label for="state">State:</label>
+          <select id="state" name="state">
+            <option value="">Select a state</option>
+          </select>
+        </div>
+        </div>
+        <div class="zipcode-container">
+            <label for="zipcode">Zip Code:</label>
+            <input type="text" 
+              name="zipcode"
+              id="zipcode"
+              maxlength="10">
+        </div>
+        </div> <!--patient contact and identification-->
+          <div class="phone-container">
+            <label for="phone">Phone:</label>
+            <input type="tel"
+            id="phone"
+            name="phone"
+            placeholder="(123) 456-7890"
+            maxlength="14">
+          </div>
+          <div class="city-container">
+            <label for="city">City:</label>
+            <input type="text"
+            id="city"
+            name="city"
+            maxlength="30">
+        </div>
+        <div class="state-container">
+            <label for="state">State:</label>
+            <select id="state" name="state">
+            <option value="">Select a state</option>
+            <option value="TX">Texas</option>
+            <option value="CA">California</option>
+            <option value="FL">Florida</option>
+            <option value="NY">New York</option>
+            <option value="WA">Washington</option>
+            <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="ssn-container">
+            <label for="ssn">Social Security Number:</label>
+            <input type="password"
+            id="ssn"
+            name="ssn"
+            maxlength="11"
+            placeholder="XXX-XX-XXXX">
+        </div>
+        <!--patient gender-->
+        <div class="gender-container">
+            <label for="gender">Gender:</label>
+            <input type="radio" name="gender" value="male" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" value="female" id="female">
+            <label for="female">Female</label>  
+            <input type="radio" name="gender" value="other" id="other">
+            <label for="other">Other</label>
+          </div>
+      <!--patient availability-->
+      <div class="table-container"> 
+       <h3>Appointment Availability</h3>
+       <table>
+        <tr>
+          <th>Day</th>
+          <th>Morning</th>
+          <th>Afternoon</th>
+          <th>Evening</th>
+        </tr>
+
+        <tr>
+          <td>Monday</td>
+          <td><input type="checkbox" name="monday-morning"></td>
+          <td><input type="checkbox" name="monday-afternoon"></td>
+          <td><input type="checkbox" name="monday-evening"></td>
+        </tr>
+        <tr>
+          <td>Tuesday</td>
+          <td><input type="checkbox" name="tuesday-morning"></td>
+          <td><input type="checkbox" name="tuesday-afternoon"></td>
+          <td><input type="checkbox" name="tuesday-evening"></td>
+        </tr>
+        <tr>
+          <td>Wednesday</td>
+          <td><input type="checkbox" name="wednesday-morning"></td>
+          <td><input type="checkbox" name="wednesday-afternoon"></td>
+          <td><input type="checkbox" name="wednesday-evening"></td>
+        </tr>
+        <tr>
+          <td>Thursday</td>
+          <td><input type="checkbox" name="thursday-morning"></td>
+          <td><input type="checkbox" name="thursday-afternoon"></td>
+          <td><input type="checkbox" name="thursday-evening"></td>
+        </tr>
+        <tr>
+          <td>Friday</td>
+          <td><input type="checkbox" name="friday-morning"></td>
+          <td><input type="checkbox" name="friday-afternoon"></td>
+          <td><input type="checkbox" name="friday-evening"></td>
+        </tr>
+       </table>
+      </div> 
+      <!--patient injury details-->
+      <div class="comment-container">
+        <label for="comments">Comments:</label>
+        <textarea id="comments"
+          name="comments"
+          rows="4"
+          cols="50"
+          placeholder="Injury details..."></textarea>
+      </div>
+      <!--emergency urgency scale-->
+      <div class="slider-container">
+        <label for="emergencyurgency">Emergency Urgency:</label>
+        <input type="range"
+        id="emergencyurgency"
+        name="emergencyurgency"
+        min="1"
+        max="10"
+        value="5">
+      </div>
+      <!--notification pref-->
+      <div class="checkbox-container">
+        <label>
+          <input type="checkbox" name="terms" required>
+          I would like to receive email notification about my account and other information.
+        </label>
+      </div>
+      <div class="other-check-box-container">
+        <label>
+          <input type="checkbox" name="other" required>
+          I would like to opt out of receiving email notification about my account and other information.
+        </label>
+      <!--submit and reset button-->
+      <div class="submit-container">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">  
+      </div>
+      <!--copyright info/footer info-->
+      <footer class="footer-container">
+        <p>&copy; 2026 Coral Medicine. All rights reserved.</p>
+      </footer>  
+<script>
+  document.getElementById("today").innerHTML = new Date().toLocaleDateString();
+</script>
+</form>
+</html>
 

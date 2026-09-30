@@ -1,0 +1,385 @@
+body {
+  background-color:#B8C3F2;
+}
+
+.header-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.head-right {
+  display: flex;
+  align-self: stretch;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.head-left {
+  padding-right: 10px;
+}
+
+.head-middle {
+  white-space: nowrap;
+  width: 100%;
+}
+
+.logo-size {
+  width: 55px;
+  height: auto;
+}
+
+.logo-text {
+  font-family:Arial;
+}
+
+.date-text {
+  font-family:Arial;
+  font-size:12px;
+}
+
+li {
+  padding-bottom:15px;
+  font-family:Arial;
+  list-style-type:none;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+.name-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0;
+    gap: 5px;
+}
+
+.name-container label{
+  margin-right: 3px;
+}
+
+.name-container input {
+    height: 15px;
+    font-size: 14px;
+}
+
+
+form {
+    margin: 0;
+    padding: 0;
+}
+.userid-row {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.userid-row label {
+    margin: 0 5px 0 0;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.confirm-password-container {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.email-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  padding-left: 0;  
+  margin-bottom: 10px;
+  width: 100%;
+}
+.email-container label {
+  margin-right: 5px;
+}
+.email-container input {
+  height: 15px;
+  font-size: 14px;
+}
+
+#email,
+#confirmemail {
+  width: 200px;
+}
+
+.confirm-email-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  padding-left: 0;  
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.confirm-email-container label {
+  margin-right: 5px;
+} 
+
+.confirm-email-container input {
+  height: 15px;
+  font-size: 16px;
+} 
+
+.dob-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  padding-left: 0;  
+  margin-bottom: 15px;
+}
+.dob-container label {
+  margin-right: 5px;
+}
+
+.dob-container input {
+  height: 15px;
+  font-size: 12px;
+}
+
+/* Address, Country, and Zip Code */
+
+.address-container {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
+
+#address2 {
+  width: 150px;
+  height: 20px;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+
+/* Address */
+.address-row {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.address-row label {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+#address {
+    width: 200px;
+    height: 13px;
+    font-size: 16px;
+}
+
+/* Country */
+.country-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.country-container label {
+    margin-right: 5px;
+}
+
+#country {
+    width: 150px;
+    height: 20px;
+    font-size: 13px;
+}
+
+/* Zip Code */
+.zipcode-container {
+    display: flex;
+    align-items: center;
+}
+
+.zipcode-container label {
+    margin-right: 5px;
+    margin-bottom: 15px;
+    margin-top: 0px;
+}
+
+#zipcode {
+    width: 100px;
+    height: 13px;
+    font-size: 16px;
+}
+
+
+.address-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.gender-container {
+  display: flex;  
+  align-items: center;
+  margin-left: 0;
+  padding-left: 0;
+  margin-bottom: 10px;
+}
+
+.gender-container label {
+  margin-right: 5px;
+}
+
+.gender-container input {
+  margin-right: 5px;
+}
+
+h1 {
+  border: 5px solid rgb(133, 63, 133)
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fb6de6;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+}
+
+.table-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.table-container table {
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.table-container th {
+  background-color: #D8D2F5;
+}
+
+.table-container {
+margin-top: 0;
+padding-top: 0;
+}
+
+.table-container h3 {
+margin-top: 5px;
+margin-bottom: 10px;
+}
+
+.city-container,
+.state-container,
+.ssn-container,
+.phone-container,
+.textarea-container,
+.checkbox-container,
+.slider-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.city-container label,
+.state-container label,
+.ssn-container label,
+.phone-container label,
+.textarea-container label,
+.slider-container label {
+  margin-right: 5px;
+}
+
+#city {
+  width: 200px;
+  height: 15px;
+}
+
+#state {
+  width: 150px;
+  height: 20px;
+}
+
+#ssn {
+  width: 150px;
+  height: 15px;
+}
+
+#phone {
+  width: 150px;
+  height: 20px;
+}
+
+.textarea-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.textarea-container label {
+  margin-top: 0;
+  margin-right: 5px;
+}
+
+#comments {
+  font-size: 14px;
+}
+
+.table-container {
+  margin-top: 15px;
+}
+
+.table-container table {
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid black;
+  padding: 5px 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
+  font-family: Arial;
+}
+
+.checkbox-container {
+margin-bottom: 10px;
+}
+.submit-container {
+  margin-top: 5px;
+}
