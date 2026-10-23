@@ -63,9 +63,28 @@ function reviewForm() {
   rows.push(["Address", addr, result(e)]);
 
   // Other info
-  rows.push(["Gender", f.gender.value, ""]);
+  rows.push(["Gender", f.gender.value || "Not selected", ""]);
   rows.push(["Emergency Urgency", f.emergencyurgency.value + " out of 10", ""]);
   rows.push(["Comments", esc(f.comments.value), ""]);
+
+  // Appointment availability
+  var days = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+  var times = ["morning", "afternoon", "evening"];
+  var avail = [];
+  for (var d = 0; d < days.length; d++) {
+    for (var t = 0; t < times.length; t++) {
+      if (f[days[d] + "-" + times[t]].checked) {
+        avail.push(days[d].charAt(0).toUpperCase() + days[d].slice(1) + " " + times[t]);
+      }
+    }
+  }
+  rows.push(["Appointment Availability", avail.length ? avail.join(", ") : "None selected", ""]);
+
+  // Notification preference
+  var notify = "No preference";
+  if (document.getElementById("notify-yes").checked) notify = "Receive email notifications";
+  if (document.getElementById("notify-no").checked) notify = "Opted out of email notifications";
+  rows.push(["Email Notifications", notify, ""]);
   // Health checkboxes
   var boxes = document.querySelectorAll('input[name="conditions"]');
   for (var i = 0; i < boxes.length; i++) {
