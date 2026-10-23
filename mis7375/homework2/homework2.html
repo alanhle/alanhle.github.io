@@ -1,34 +1,109 @@
 <!DOCTYPE html>
 <!--
 Name: Alan Le
-File: homework1.html
-Date Created: 9/27/2026
-Date Updated: 9/28/2026
-Purpose: MIS 7375 Homework 1
--->
+File: homework2.html
+Date Created: 10/19/2026
+Date Updated: 10/23/2026
+Purpose: MIS 7375 Homework 2
+
+SYNOPSIS: This is a patient registration form for Coral Medicine. It includes fields for personal information, contact details, health history, appointment availability, and emergency urgency. The form uses HTML5 validation attributes and JavaScript for additional validation and dynamic features.
+
+
+PSEUDOCODE:
+ON PAGE LOAD
+    display today's date in the header
+    set the date of birth minimum to 120 years ago and maximum to today
+    FOR each validated field (names, user ID, email, confirm email,
+            date of birth, address, zip, phone, city, state, SSN)
+        create an empty error message beside the field
+        ON blur: run checkField
+        ON input: run checkField if the field already shows an error
+
+FUNCTION checkField(field)
+    IF field is Confirm Email
+        IF value is not empty AND differs from Email
+            mark the field invalid with "Emails do not match"
+        ELSE
+            clear the invalid mark
+    IF field is valid
+        clear its error message
+    ELSE IF field is empty and required
+        show "This field is required"
+    ELSE IF date is outside the allowed range
+        show the date range message
+    ELSE IF field has a custom error
+        show the custom error
+    ELSE
+        show the field's title text as the message
+
+ON Email input
+    IF Confirm Email is not empty
+        run checkField on Confirm Email
+
+ON Password input
+    list the rules not yet met (8+ characters, lowercase, uppercase,
+            number, special character)
+    IF the password is empty
+        show nothing
+    ELSE IF rules are missing
+        show "Still needs: " plus the list
+    ELSE
+        show "Password looks good"
+    run checkPasswords
+
+FUNCTION checkPasswords
+    IF Confirm Password is empty
+        clear the message
+    ELSE IF Password differs from Confirm Password
+        show "Passwords do not match" and mark the field invalid
+    ELSE
+        show "Passwords match" and clear the invalid mark
+
+ON slider input
+    display "<value> out of 10"
+
+ON user ID leaving focus
+    convert the user ID to lowercase
+
+ON notification checkbox click
+    IF the "yes" box is checked
+        uncheck the "no" box
+ON Submit
+    IF any required field is invalid
+        block submission
+        show an error message beside every invalid field
+    ELSE
+        go to thank-you.html
+
+ON Review button click
+    FOR each of name, date of birth, email, phone, SSN, address,
+            user ID, password
+        test the value against its rules and collect any error messages
+        add a table row: label, escaped value, "pass" or the errors
+    IF SSN is entered
+        display only "***-**-" plus the last 4 digits
+    display the password as asterisks
+    add rows for gender, urgency, comments, and each health checkbox (Y or N)
+    display the table in the review area-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>JavaScript Form Validation using a sample registration form</title>
   <link rel="stylesheet" href="style.css">
- <script src="script.js"></script> 
+ <script src="script.js" defer></script> 
 </head>
 <body>
 <!--Header section, logo, company name, and dynamic date-->
 <div class="header-container">
-
-<div class="head-left">
- <img src="../homework1/images/coral_med_logo.png.webp" alt="Coral Medicine logo" class="logo-size">
-</div>
-<div class="head-middle">
-  <h1>Coral Medicine</h1>
-</div>
-<div class="head-right">
-  <tr>
-    <td valign="top" align="right">Today's date: <span id="today">Date goes here</span></td>
-  </tr>
-</div>
-
+  <div class="head-left">
+    <img src="images/coral_med_logo.webp" alt="Coral Medicine logo" class="logo-size">
+  </div>
+  <div class="head-middle">
+    <h1>Coral Medicine</h1>
+  </div>
+  <div class="head-right">
+    <div>Today's date: <span id="today">Date goes here</span></div>
+  </div>
 </div>
 <!--patient registration form-->
 <form name="registration" action="thank-you.html">
@@ -36,54 +111,62 @@ Purpose: MIS 7375 Homework 1
     <div class="name-container">
           <label for="firstname"> First Name:</label>
           <input type="text" placeholder="First Name" size="30" maxlength="30"
-           id="firstname" name="firstname"
-           pattern="[A-Z^a-z \-'^~]{2,}"
-           oninput="checkfirstname()" onblur="checkfirstname()"
-           required
-           title="Minimum 2 characters; only letters, spaces, &quot;-&quot; and ' allowed.">
+            id="firstname" name="firstname"
+            pattern="[A-Za-z'\-]{1,30}"
+            required
+            title="1 to 30 characters. Letters, apostrophes, and dashes only.">
           <label for="middleinitial">MI:</label>
           <input type="text" placeholder="MI" size="1" maxlength="1"
-           id="middleinitial" name="middleinitial">
+            id="middleinitial" name="middleinitial"
+            pattern="[A-Za-z]"
+            title="Optional. One letter only, no numbers.">
           <label for="lastname">Last Name:</label>
           <input type="text" placeholder="Last name" size="20" maxlength="30"
-           id="lastname" name="lastname"
-           pattern="[A-Z^a-z \-'^~]{2,}"
-           oninput="checklastname()" onblur="checklastname()"
-           required
-           title="Minimum 2 characters; only letters, spaces, &quot;-&quot; and ' allowed.">
-        </div>
+            id="lastname" name="lastname"
+            pattern="[A-Za-z'\-2-5]{1,30}"
+            required
+            title="1 to 30 characters. Letters, apostrophes, dashes, and numbers 2 to 5 only.">
+    </div>
         <!--account user login for userid and password-->
         <div class="userid-row">
-          <label for="userid">User ID:</label>
+        <label for="userid">User ID:</label>
           <input type="text"
             id="userid"
             name="userid"
             size="20"
             minlength="5"
             maxlength="30"
-            pattern="[A-Za-z]+[A-Za-z0-9-_]{8,}"
+            pattern="[A-Za-z][A-Za-z0-9_\-]{4,29}"
             required
-            oninvalid="this.setCustomValidity('Invalid User ID. Enter letters, numbers, dash or underscores. 1st character must be a letter.')"
+            oninvalid="this.setCustomValidity('Invalid User ID. Use 5 to 30 letters, numbers, dashes or underscores. The first character must be a letter.')"
             oninput="this.setCustomValidity('')"
-            title="Minimum 5 characters; no spaces or special characters.">
+            onblur="this.value = this.value.toLowerCase()"
+            title="5 to 30 characters. Letters, numbers, dash and underscore only. Must start with a letter. No spaces.">
         </div>
         <div class="password-container">
           <label for="userpassword">Password:</label>
           <input type="password"
                  id="userpassword"
+                 oninput="checkRules(); checkPasswords()"
                  name="userpassword"
                  size="20"
                  maxlength="30"
+                 pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9&quot;\s])[^&quot;\s]{8,30}"
+                 title="8 to 30 characters with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character. No quotes or spaces."
                  required>
+                 <span id="pw-rules"></span>
         </div>
         <div class="confirm-password-container">
-          <label for="confirmpassword">Confirm Password:</label>
-          <input type="password"
-           id="confirmpassword"
-           name="confirmpassword"
-           size="20"
-           maxlength="30"
-           required>
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="password"
+          id="confirmpassword"
+          name="confirmpassword"
+          size="20"
+          maxlength="30"
+          title="Type the same password again."
+          oninput="checkPasswords()"
+          required>
+<span id="password-message"></span>
         </div>
         <!--patients email and date of birth information-->
         <div class="email-container">
@@ -93,6 +176,8 @@ Purpose: MIS 7375 Homework 1
               name="email"
               size="20"
               maxlength="50"
+              pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"
+              title="Enter your email in the format name@domain.com"
               required>
         </div>
         <div class="confirm-email-container">
@@ -102,6 +187,8 @@ Purpose: MIS 7375 Homework 1
               name="confirmemail"
               size="20"
               maxlength="50"
+              pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"
+              title="Type the same email address again."
               required>
         </div>
         <div class="dob-container">
@@ -109,6 +196,7 @@ Purpose: MIS 7375 Homework 1
             <input type="date"
               id="dob"
               name="dob"
+              title="Choose your date of birth. It cannot be in the future or more than 120 years ago."
               required>
         </div>
         <!--patients address and other location information-->
@@ -118,13 +206,17 @@ Purpose: MIS 7375 Homework 1
             <input type="text"
               id="address"
               name="address"
-              maxlength="30">
-            <div class="address-container"></div>
-              <label for="address2">Address Line 2</label>
-              <input type="text" 
-                id="address2"
-                name="address2"
-                maxlength="30">
+              maxlength="30"
+              pattern="[A-Za-z0-9 .,#'\-]{2,30}"
+              required
+              title="2 to 30 characters. Letters, numbers, spaces, and . , # ' - only.">
+            <label for="address2">Address Line 2</label>
+            <input type="text" 
+              id="address2"
+              name="address2"
+              maxlength="30"
+              pattern="[A-Za-z0-9 .,#'\-]{2,30}"
+              title="2 to 30 characters. Letters, numbers, spaces, and . , # ' - only.">
         </div>
         </div>
         <div class="zipcode-container">
@@ -132,56 +224,123 @@ Purpose: MIS 7375 Homework 1
             <input type="text" 
               name="zipcode"
               id="zipcode"
-              maxlength="10">
+              maxlength="10"
+              pattern="[0-9]{5}(-[0-9]{4})?"
+              title="Enter a 5-digit zip code, or zip+4 like 77002-1234"
+              required>
         </div>
-        </div> <!--patient contact and identification-->
+        <!--patient contact and identification-->
           <div class="phone-container">
             <label for="phone">Phone:</label>
             <input type="tel"
             id="phone"
             name="phone"
-            placeholder="(123) 456-7890"
-            maxlength="14">
+            placeholder="123-456-7890"
+            maxlength="12"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            title="Enter your phone number in the format 123-456-7890">
           </div>
           <div class="city-container">
             <label for="city">City:</label>
             <input type="text"
             id="city"
             name="city"
-            maxlength="30">
+            maxlength="30"
+            pattern="[A-Za-z .'\-]{2,30}"
+            required
+            title="2 to 30 characters. Letters, spaces, periods, apostrophes, and dashes only.">
         </div>
         <div class="state-container">
             <label for="state">State:</label>
-            <select id="state" name="state">
+            <select id="state" name="state" required title="Choose your state from the list.">
             <option value="">Select a state</option>
-            <option value="TX">Texas</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
             <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District of Columbia</option>
             <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
             <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
             <option value="WA">Washington</option>
-            <option value="Other">Other</option>
-            </select>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
         </div>
 
         <div class="ssn-container">
-            <label for="ssn">Social Security Number:</label>
-            <input type="password"
-            id="ssn"
-            name="ssn"
-            maxlength="11"
-            placeholder="XXX-XX-XXXX">
+        <label for="ssn">Social Security Number:</label>
+        <input type="password"
+          id="ssn"
+          name="ssn"
+          maxlength="11"
+          placeholder="XXX-XX-XXXX"
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}"
+          title="Optional. Enter your Social Security Number in the format 123-45-6789.">
         </div>
         <!--patient gender-->
         <div class="gender-container">
-            <label for="gender">Gender:</label>
-            <input type="radio" name="gender" value="male" id="male">
+            <span>Gender:</span>
+            <input type="radio" name="gender" value="male" id="male" title="Select your gender.">
             <label for="male">Male</label>
-            <input type="radio" name="gender" value="female" id="female">
+            <input type="radio" name="gender" value="female" id="female" title="Select your gender.">
             <label for="female">Female</label>  
-            <input type="radio" name="gender" value="other" id="other">
+            <input type="radio" name="gender" value="other" id="other" title="Select your gender.">
             <label for="other">Other</label>
           </div>
       <!--patient availability-->
+      <!--health history checkboxes-->
+      <div class="health-container">
+        <p>Check all of the following that apply to you:</p>
+        <label><input type="checkbox" name="conditions" value="Chicken Pox" title="Check if you have had chicken pox."> Chicken Pox</label><br>
+        <label><input type="checkbox" name="conditions" value="Measles" title="Check if you have had measles."> Measles</label><br>
+        <label><input type="checkbox" name="conditions" value="Mumps" title="Check if you have had mumps."> Mumps</label><br>
+        <label><input type="checkbox" name="conditions" value="Heart Disease" title="Check if you have heart disease."> Heart Disease</label><br>
+        <label><input type="checkbox" name="conditions" value="Diabetes" title="Check if you have diabetes."> Diabetes</label><br>
+        <label><input type="checkbox" name="conditions" value="Covid-19" title="Check if you have had Covid-19."> Covid-19</label><br>
+        <label><input type="checkbox" name="conditions" value="Other" title="Check if you have another condition not listed."> Other</label>
+      </div>
       <div class="table-container"> 
        <h3>Appointment Availability</h3>
        <table>
@@ -231,7 +390,8 @@ Purpose: MIS 7375 Homework 1
           name="comments"
           rows="4"
           cols="50"
-          placeholder="Injury details..."></textarea>
+          placeholder="Injury details..."
+          title="Describe your injury or symptoms. Optional."></textarea>
       </div>
       <!--emergency urgency scale-->
       <div class="slider-container">
@@ -249,13 +409,13 @@ Purpose: MIS 7375 Homework 1
       <!--notification pref-->
       <div class="checkbox-container">
         <label>
-          <input type="checkbox" name="terms"> 
+          <input type="checkbox" name="terms" id="notify-yes" title="Check to receive email notifications." onclick="if (this.checked) document.getElementById('notify-no').checked = false">
           I would like to receive email notification about my account and other information.
         </label>
       </div>
       <div class="other-check-box-container">
         <label>
-          <input type="checkbox" name="other">
+          <input type="checkbox" name="other" id="notify-no" title="Check to opt out of email notifications." onclick="if (this.checked) document.getElementById('notify-yes').checked = false">
           I would like to opt out of receiving email notification about my account and other information.
         </label>
       </div>
@@ -274,6 +434,7 @@ Purpose: MIS 7375 Homework 1
   document.getElementById("today").innerHTML = new Date().toLocaleDateString();
 </script>
 </form>
+</body>
 </html>
 
 

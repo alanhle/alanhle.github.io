@@ -383,3 +383,19 @@ margin-bottom: 10px;
 .submit-container {
   margin-top: 5px;
 }
+
+.error, #password-message, #pw-rules { color: #b00020; font-size: 13px; margin-left: 6px; }
+
+.footer-container { margin-top: 10px; padding: 10px; text-align: center; font-family: Arial; }
+
+.comment-container { display: flex; align-items: flex-start; margin-bottom: 10px; }
+.comment-container label { margin-right: 5px; }
+
+.other-check-box-container { display: flex; align-items: center; margin-bottom: 10px; }
+
+#review-area { margin-top: 15px; }
+#review-area table { border-collapse: collapse; background: #fff; }
+#review-area th, #review-area td { border: 1px solid black; padding: 5px 10px; text-align: left; }
+#review-area th { background-color: #D8D2F5; }
+
+
