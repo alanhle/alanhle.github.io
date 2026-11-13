@@ -1,7 +1,370 @@
+<!DOCTYPE html>
 <!--
 Name: Alan Le
 File: homework3.html
-Date Created: 11/09/2026
-Date Updated: 11/09/2026
+Date Created: 11/08/2026
+Date Updated: 11/13/2026
 Purpose: MIS 7375 Homework 3 - JavaScript validation on the fly
 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JavaScript Form Validation using a sample registration form</title>
+  <link rel="stylesheet" href="style.css">
+ <script src="script.js" defer></script> 
+</head>
+<body>
+<!--Header section, logo, company name, and dynamic date-->
+<div class="header-container">
+  <div class="head-left">
+    <img src="images/coral_med_logo.webp" alt="Coral Medicine logo" class="logo-size">
+  </div>
+  <div class="head-middle">
+    <h1>Coral Medicine</h1>
+  </div>
+  <div class="head-right">
+    <div>Today's date: <span id="today">Date goes here</span></div>
+  </div>
+</div>
+<!--patient registration form-->
+<form name="registration" action="thank-you.html">
+  <!--Patients name-->
+    <div class="name-container">
+      <div class="field">
+        <label for="firstname">First Name:</label>
+        <input type="text" placeholder="First Name" size="30" maxlength="30"
+          id="firstname" name="firstname"
+          pattern="[A-Za-z'\-]{1,30}"
+          required
+          title="1 to 30 characters. Letters, apostrophes, and dashes only.">
+      </div>
+      <div class="field">
+        <label for="middleinitial">MI:</label>
+        <input type="text" placeholder="MI" size="1" maxlength="1"
+          id="middleinitial" name="middleinitial"
+          pattern="[A-Za-z]"
+          title="Optional. One letter only, no numbers.">
+      </div>
+      <div class="field">
+        <label for="lastname">Last Name:</label>
+        <input type="text" placeholder="Last name" size="20" maxlength="30"
+          id="lastname" name="lastname"
+          pattern="[A-Za-z'\-]{1,30}"
+          required
+          title="1 to 30 characters. Letters, apostrophes, and dashes only.">
+      </div>
+    </div>
+        <!--account user login for userid and password-->
+        <div class="userid-row">
+        <label for="userid">User ID:</label>
+          <input type="text"
+            id="userid"
+            name="userid"
+            size="20"
+            minlength="5"
+            maxlength="20"
+            pattern="[A-Za-z][A-Za-z0-9_\-]{4,19}"
+            required
+            oninvalid="this.setCustomValidity('Invalid User ID. Use 5 to 20 letters, numbers, dashes or underscores. The first character must be a letter.')"
+            oninput="this.setCustomValidity('')"
+            onblur="this.value = this.value.toLowerCase()"
+            title="5 to 20 characters. Letters, numbers, dash and underscore only. Must start with a letter. No spaces.">
+        </div>
+        <div class="password-container">
+          <label for="userpassword">Password:</label>
+          <input type="password"
+                 id="userpassword"
+                 oninput="checkRules(); checkPasswords()"
+                 name="userpassword"
+                 size="20"
+                 maxlength="30"
+                 pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[^&quot;\s]{8,30}"
+                 title="8 to 30 characters with at least 1 uppercase letter, 1 lowercase letter, and 1 number. No quotes or spaces."
+                 required>
+                 <span id="pw-rules"></span>
+        </div>
+        <div class="confirm-password-container">
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="password"
+          id="confirmpassword"
+          name="confirmpassword"
+          size="20"
+          maxlength="30"
+          title="Type the same password again."
+          oninput="checkPasswords()"
+          required>
+<span id="password-message"></span>
+        </div>
+        <!--patients email and date of birth information-->
+        <div class="email-container">
+            <label for="email">Email:</label>
+            <input type="text" 
+              id="email"
+              name="email"
+              size="20"
+              maxlength="50"
+              pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"
+              title="Enter your email in the format name@domain.com"
+              required>
+        </div>
+        <div class="confirm-email-container">
+            <label for="confirmemail">Confirm Email:</label>
+            <input type="text" 
+              id="confirmemail"
+              name="confirmemail"
+              size="20"
+              maxlength="50"
+              pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"
+              title="Type the same email address again."
+              required>
+        </div>
+        <div class="dob-container">
+            <label for="dob">Date of Birth:</label>
+            <input type="date"
+              id="dob"
+              name="dob"
+              title="Choose your date of birth. It cannot be in the future or more than 120 years ago."
+              required>
+        </div>
+        <!--patients address and other location information-->
+        <div class="address-container">
+          <div class="address-row">
+            <label for="address">Address:</label>
+            <input type="text"
+              id="address"
+              name="address"
+              maxlength="30"
+              pattern="[A-Za-z0-9 .,#'\-]{2,30}"
+              required
+              title="2 to 30 characters. Letters, numbers, spaces, and . , # ' - only.">
+            <label for="address2">Address Line 2</label>
+            <input type="text" 
+              id="address2"
+              name="address2"
+              maxlength="30"
+              pattern="[A-Za-z0-9 .,#'\-]{2,30}"
+              title="2 to 30 characters. Letters, numbers, spaces, and . , # ' - only.">
+        </div>
+        </div>
+        <div class="zipcode-container">
+            <label for="zipcode">Zip Code:</label>
+            <input type="text" 
+              name="zipcode"
+              id="zipcode"
+              maxlength="5"
+              pattern="[0-9]{5}"
+              title="Enter exactly 5 digits, such as 77002."
+              required>
+        </div>
+        <!--patient contact and identification-->
+          <div class="phone-container">
+            <label for="phone">Phone:</label>
+            <input type="tel"
+            id="phone"
+            name="phone"
+            placeholder="123-456-7890"
+            maxlength="12"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            title="Enter your phone number in the format 123-456-7890">
+          </div>
+          <div class="city-container">
+            <label for="city">City:</label>
+            <input type="text"
+            id="city"
+            name="city"
+            maxlength="30"
+            pattern="[A-Za-z .'\-]{2,30}"
+            required
+            title="2 to 30 characters. Letters, spaces, periods, apostrophes, and dashes only.">
+        </div>
+        <div class="state-container">
+            <label for="state">State:</label>
+            <select id="state" name="state" required title="Choose your state from the list.">
+            <option value="">Select a state</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
+        </div>
+
+        <div class="ssn-container">
+        <label for="ssn">Social Security Number:</label>
+        <input type="password"
+          id="ssn"
+          name="ssn"
+          maxlength="11"
+          placeholder="XXX-XX-XXXX"
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}"
+          required
+          title="Enter 9 digits. Dashes are added for you, for example 123-45-6789. Do not use a real number.">
+        </div>
+        <!--patient gender-->
+        <div class="gender-container">
+            <span>Gender:</span>
+            <input type="radio" name="gender" value="male" id="male" title="Select your gender.">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" value="female" id="female" title="Select your gender.">
+            <label for="female">Female</label>  
+            <input type="radio" name="gender" value="other" id="other" title="Select your gender.">
+            <label for="other">Other</label>
+          </div>
+      <!--patient availability-->
+      <!--health history checkboxes-->
+      <div class="health-container">
+        <p>Check all of the following that apply to you:</p>
+        <label><input type="checkbox" name="conditions" value="Chicken Pox" title="Check if you have had chicken pox."> Chicken Pox</label><br>
+        <label><input type="checkbox" name="conditions" value="Measles" title="Check if you have had measles."> Measles</label><br>
+        <label><input type="checkbox" name="conditions" value="Mumps" title="Check if you have had mumps."> Mumps</label><br>
+        <label><input type="checkbox" name="conditions" value="Heart Disease" title="Check if you have heart disease."> Heart Disease</label><br>
+        <label><input type="checkbox" name="conditions" value="Diabetes" title="Check if you have diabetes."> Diabetes</label><br>
+        <label><input type="checkbox" name="conditions" value="Covid-19" title="Check if you have had Covid-19."> Covid-19</label><br>
+        <label><input type="checkbox" name="conditions" value="Other" title="Check if you have another condition not listed."> Other</label>
+      </div>
+      <div class="table-container"> 
+       <h3>Appointment Availability</h3>
+       <table>
+        <tr>
+          <th>Day</th>
+          <th>Morning</th>
+          <th>Afternoon</th>
+          <th>Evening</th>
+        </tr>
+
+        <tr>
+          <td>Monday</td>
+          <td><input type="checkbox" name="monday-morning"></td>
+          <td><input type="checkbox" name="monday-afternoon"></td>
+          <td><input type="checkbox" name="monday-evening"></td>
+        </tr>
+        <tr>
+          <td>Tuesday</td>
+          <td><input type="checkbox" name="tuesday-morning"></td>
+          <td><input type="checkbox" name="tuesday-afternoon"></td>
+          <td><input type="checkbox" name="tuesday-evening"></td>
+        </tr>
+        <tr>
+          <td>Wednesday</td>
+          <td><input type="checkbox" name="wednesday-morning"></td>
+          <td><input type="checkbox" name="wednesday-afternoon"></td>
+          <td><input type="checkbox" name="wednesday-evening"></td>
+        </tr>
+        <tr>
+          <td>Thursday</td>
+          <td><input type="checkbox" name="thursday-morning"></td>
+          <td><input type="checkbox" name="thursday-afternoon"></td>
+          <td><input type="checkbox" name="thursday-evening"></td>
+        </tr>
+        <tr>
+          <td>Friday</td>
+          <td><input type="checkbox" name="friday-morning"></td>
+          <td><input type="checkbox" name="friday-afternoon"></td>
+          <td><input type="checkbox" name="friday-evening"></td>
+        </tr>
+       </table>
+      </div> 
+      <!--patient injury details-->
+      <div class="comment-container">
+        <label for="comments">Comments:</label>
+        <textarea id="comments"
+          name="comments"
+          rows="4"
+          cols="50"
+          placeholder="Injury details..."
+          title="Describe your injury or symptoms. Optional."></textarea>
+      </div>
+      <!--emergency urgency scale-->
+      <div class="slider-container">
+        <label for="emergencyurgency">Emergency Urgency:</label>
+        <input type="range"
+        id="emergencyurgency"
+        name="emergencyurgency"
+        min="1"
+        max="10"
+        value="5"
+        title="Slide to rate how urgent your situation is, from 1 (low) to 10 (high)."
+        oninput="updateUrgency()">
+        <span id="urgency-value">5 out of 10</span>
+      </div>
+      <!--notification pref-->
+      <div class="checkbox-container">
+        <label>
+          <input type="checkbox" name="terms" id="notify-yes" title="Check to receive email notifications." onclick="if (this.checked) document.getElementById('notify-no').checked = false">
+          I would like to receive email notification about my account and other information.
+        </label>
+      </div>
+      <div class="other-check-box-container">
+        <label>
+          <input type="checkbox" name="other" id="notify-no" title="Check to opt out of email notifications." onclick="if (this.checked) document.getElementById('notify-yes').checked = false">
+          I would like to opt out of receiving email notification about my account and other information.
+        </label>
+      </div>
+      <!--submit and reset button-->
+      <div class="submit-container">
+        <input type="button" id="validate-btn" value="Validate" onclick="validateForm()">
+        <input type="submit" id="submit-btn" value="Submit" style="display:none">
+        <input type="reset" value="Reset">
+        <input type="button" value="Review" onclick="reviewForm()">
+        <span id="validate-message"></span>
+      </div>
+      <div id="review-area"></div>
+      <!--copyright info/footer info-->
+      <footer class="footer-container">
+        <p>&copy; 2026 Coral Medicine. All rights reserved.</p>
+      </footer>  
+<script>
+  document.getElementById("today").innerHTML = new Date().toLocaleDateString();
+</script>
+</form>
+</body>
+</html>
+
+
